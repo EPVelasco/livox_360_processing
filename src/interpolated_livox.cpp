@@ -192,53 +192,6 @@ void callback(const PointCloud::ConstPtr& msg_pointCloud)
     // Filter black holes.
   //  ============================================================================================================
 
-
-  // for (int i=0; i< Z.n_cols; ++i)
-  //   for (int j=0; j<Z.n_rows ; ++j)
-
-  //   {
-  //     if (Z(j,i)>=minlen) {
-  //       interdephtImage.at<ushort>(j, i)  = Z(j,i); 
-  //       heightImage.at<ushort>(j, i)      = Zz(j,i); 
-  //      // interdephtfilter.at<ushort>(j, i) = img_range_bk(j,i); 
-  //     }
-  //   }
-
-
-  // for (int r = 0; r < 2; r++){
-  //   img_range_bk = interdephtImage.clone();
-  //   img_height_bk = heightImage.clone();
-  //   for (int j = S; j < Z.n_rows-S; j++){
-  //     for (int i = S; i < Z.n_cols-S; i++){
-  //       if (interdephtImage.at<ushort>(j, i) == 0){
-  //         cv::Rect roi(i-1, j-1, S, S);
-  //         cv::Mat cropped_ra = interdephtImage(roi);
-  //         cv::Mat cropped_re = heightImage(roi);
-  //         double N_ra = 0;
-  //         double N_re = 0;
-  //         double val_ra = 0;
-  //         double val_re = 0;
-  //         for (int v = 0; v < S; v++){
-  //           for (int u = 0; u < S; u++){
-  //             if (cropped_ra.at<ushort>(v, u) > 0){
-  //               N_ra = N_ra + 1.0; 
-  //               val_ra = val_ra + (double)(cropped_ra.at<ushort>(v, u));
-  //             } 
-  //             if (cropped_re.at<ushort>(v, u) > 0){
-  //               N_re = N_re + 1.0; 
-  //               val_re = val_re + (double)(cropped_re.at<ushort>(v, u));
-  //             } 
-  //           } 
-  //         }
-  //         //std::cout << val / N << std::endl;
-  //         if (N_ra > 0.0) img_range_bk.at<ushort>(j, i) = (ushort)(val_ra / N_ra);
-  //         if (N_re > 0.0) img_height_bk.at<ushort>(j, i) = (ushort)(val_re / N_re);
-  //       }
-  //     }
-  //   }
-  // }
-
-
   arma::mat img_range_bk = Z;
   arma::mat img_height_bk = Zz;
 
@@ -258,7 +211,6 @@ void callback(const PointCloud::ConstPtr& msg_pointCloud)
                     double N_re = 0.0;
                     double val_ra = 0.0;
                     double val_re = 0.0;
-                    // Calcular la media de los valores en la región de interés
                     for (int v = 0; v < S; v++) {
                         for (int u = 0; u < S; u++) {
                             if (cropped_ra(v, u) != 0) {
@@ -273,13 +225,8 @@ void callback(const PointCloud::ConstPtr& msg_pointCloud)
                             }
                         }
                     }
-                    // Asignar el valor promedio a la posición correspondiente en la matriz de salida
                     if (N_ra > 0.0){
                         img_range_bk.at(j, i) = val_ra / N_ra;
-                        // std::cout<<"data: "<<img_range_bk.at(j, i)<<std::endl;
-
-                        // std::cout<<"val: "<<val_ra<<std::endl;
-                        // std::cout<<"N_ra: "<<N_ra<<std::endl;
                     }
                     if (N_re > 0.0){
                         img_height_bk.at(j, i) = val_re / N_re;
@@ -293,30 +240,15 @@ void callback(const PointCloud::ConstPtr& msg_pointCloud)
 
   for (int i=0; i< Z.n_cols; ++i)
     for (int j=0; j<Z.n_rows ; ++j){
-      
-      //if (Z(j,i)>=minlen) {
 
         interdephtImage.at<ushort>(j, i)  = Z(j,i); 
         heightImage.at<ushort>(j, i)      = img_height_bk(j,i); 
         interdephtfilter.at<ushort>(j, i) = img_range_bk(j,i); 
 
-     // }
     }
 
   Z = img_range_bk; 
   Zz = img_height_bk; 
-
-
-
-
-  // for (int i=0; i< img_range_bk.cols; ++i)
-  //   for (int j=0; j<img_range_bk.rows ; ++j)
-  //   {
-  //     Z.at(j,i)  = img_range_bk.at<ushort>(j, i);
-  //    // Zz.at(j,i) = img_height_bk.at<ushort>(j, i);
-  
-  //   }
-  
 
 
 
