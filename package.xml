@@ -26,7 +26,9 @@
   <build_export_depend>sensor_msgs</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <build_export_depend>tf</build_export_depend>
+  <build_depend>livox_ros_driver</build_depend>
   <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>livox_ros_driver</exec_depend>  
   <exec_depend>eigen_conversions</exec_depend>
   <exec_depend>image_transport</exec_depend>
   <exec_depend>roscpp</exec_depend>

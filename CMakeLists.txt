@@ -16,6 +16,8 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
+  livox_ros_driver
+
 )
 
 find_package(PCL REQUIRED)
@@ -57,6 +59,9 @@ target_link_libraries(interpolated_livox360_node
    ${OpenCV_LIBRARIES}
    ${Boost_LIBRARIES}
 )
+
+add_executable(livox_repub src/livox_repub.cpp)
+target_link_libraries(livox_repub ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBS})
 
 
 
