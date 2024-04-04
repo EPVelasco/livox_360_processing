@@ -40,5 +40,13 @@ RUN . /opt/ros/noetic/setup.sh && \
 COPY ./MID360_config.json ${HOME}/catkin_ws/src/livox_ros_driver2/config/
 
 WORKDIR ${HOME}/catkin_ws/
-CMD ["bash", "-c", "source ${HOME}/catkin_ws/devel/setup.bash && roslaunch livox_ros_driver2 rviz_MID360.launch rviz_enable:=false"]
+# Copia el script al contenedor
+COPY entrypoint.sh /entrypoint.sh
+
+# Hace el script ejecutable
+RUN chmod +x /entrypoint.sh
+
+# Establece el script como entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+#CMD ["bash", "-c", "source ${HOME}/catkin_ws/devel/setup.bash && roslaunch livox_ros_driver2 rviz_MID360.launch rviz_enable:=false"]
 

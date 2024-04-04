@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Comprobar si se ha proporcionado el nombre de la imagen como argumento
+if [ $# -eq 0 ]; then
+    echo "Uso: $0 <nombre_de_imagen>"
+    echo "Ejemplo: $0 lidar-slam-melodic"
+    exit 1
+fi
+./cerrar_docker.sh
+# Asignar el primer argumento a una variable
+IMAGE_NAME="$1"
+msg_format="${2:-1}" # 0 is pointcloud2, 1 is custom msg format
+rosbag_enable="${3:-false}"
+
+# Ejecutar el contenedor de Docker utilizando el nombre de la imagen proporcionado
+docker run --network="host"  --init -it \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
+  --name lidar-slam \
+  -e DISPLAY="$DISPLAY" \
+  "$IMAGE_NAME" \
+  "$msg_format" "$rosbag_enable"
