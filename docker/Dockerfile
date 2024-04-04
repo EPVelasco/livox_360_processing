@@ -29,7 +29,7 @@ RUN mkdir -p ${HOME}/catkin_ws/library
 RUN cd ${HOME}/catkin_ws/library && git clone https://github.com/EPVelasco/Livox-SDK2.git && \
     mkdir -p ./Livox-SDK2/build && \
     cd ./Livox-SDK2/build && \
-    cmake .. && make -j && make install
+    cmake .. && make -j2 && make install
     
 RUN . /opt/ros/noetic/setup.sh && \
     mkdir -p ${HOME}/catkin_ws/src && \ 
