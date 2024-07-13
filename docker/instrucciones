@@ -1,0 +1,10 @@
+### Estas son las instrucciones para compilar y hacer funcionar el lidar
+# Para compilar hacer:
+docker build -t livox -f Dockerfile .
+
+# para correr con el pointcloud custom hacer
+./run_livox livox 
+# para correr con el pointcloud estandard hacer:
+./run_livox livox 0
+
+
