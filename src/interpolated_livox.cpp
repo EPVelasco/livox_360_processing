@@ -400,7 +400,8 @@ void callback(const PointCloud::ConstPtr& msg_pointCloud)
   P_out->is_dense = true;
   P_out->width = (int) P_out->points.size();
   P_out->height = 1;
-  P_out->header.frame_id = "livox_frame";
+  P_out->header = msg_pointCloud->header;  // Copy the original header
+  P_out->header.frame_id = "livox_frame";  // Set the frame_id if necessary
   pc_pub.publish (P_out);
 
 
